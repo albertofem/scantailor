@@ -80,7 +80,9 @@ INCLUDE(cmake/UpdateTranslations.cmake)
 INCLUDE(cmake/CopyToBuildDir.cmake)
 INCLUDE(cmake/LibToDLL.cmake)
 
-ST_SET_DEFAULT_BUILD_TYPE(Release)
+SET(CMAKE_BUILD_TYPE Debug)
+
+ST_SET_DEFAULT_BUILD_TYPE(Debug)
 IF(CMAKE_COMPILER_IS_GNUCC)
 	ST_SET_DEFAULT_GCC_FLAGS()
 ENDIF(CMAKE_COMPILER_IS_GNUCC)
@@ -292,14 +294,6 @@ ELSE(WIN32)
 ENDIF(WIN32)
 
 SET(Boost_USE_MULTITHREADED ON)
-FIND_PACKAGE(Boost 1.35.0 COMPONENTS unit_test_framework prg_exec_monitor)
-IF(NOT Boost_FOUND)
-	MESSAGE(
-		FATAL_ERROR
-		"Could not find boost headers or libraries.\n"
-		"You may need to install a package named libboost1.35-dev or similarly."
-	)
-ENDIF(NOT Boost_FOUND)
 
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIRS})
 LINK_DIRECTORIES(${Boost_LIBRARY_DIRS})
@@ -530,7 +524,7 @@ SET(
 	version.h
 	config.h.in
 	${common_ui_files}
-)
+        thumbgraphicview.h thumbgraphicview.cpp)
 
 SET(
 	gui_only_sources

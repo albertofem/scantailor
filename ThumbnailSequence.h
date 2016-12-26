@@ -100,6 +100,8 @@ public:
 	
 	PageSequence toPageSequence() const;
 
+	void setThumbnailLogicalSize(QSizeF const &max_size);
+
 	/**
 	 * \brief Updates appearance and possibly position of a thumbnail.
 	 *

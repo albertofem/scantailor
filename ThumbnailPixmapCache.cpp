@@ -126,6 +126,8 @@ public:
 	void ensureThumbnailExists(ImageId const& image_id, QImage const& image);
 	
 	void recreateThumbnail(ImageId const& image_id, QImage const& image);
+
+	QString getThumbDir();
 protected:
 	virtual void run();
 	
@@ -317,6 +319,10 @@ ThumbnailPixmapCache::recreateThumbnail(
 	ImageId const& image_id, QImage const& image)
 {
 	m_ptrImpl->recreateThumbnail(image_id, image);
+}
+
+QString ThumbnailPixmapCache::getThumbDir() {
+	return m_ptrImpl->getThumbDir();
 }
 
 
@@ -966,6 +972,10 @@ ThumbnailPixmapCache::Impl::cachePixmapLocked(
 		m_removeQueue.relocate(m_endOfLoadedItems, rq_it);
 		++m_numLoadedItems;
 	}
+}
+
+QString ThumbnailPixmapCache::Impl::getThumbDir() {
+	return m_thumbDir;
 }
 
 

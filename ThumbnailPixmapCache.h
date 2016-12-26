@@ -145,6 +145,8 @@ public:
 	 * \note This function may be called from any thread, even concurrently.
 	 */
 	void recreateThumbnail(ImageId const& image_id, QImage const& image);
+
+	QString getThumbDir();
 private:
 	class Item;
 	class Impl;

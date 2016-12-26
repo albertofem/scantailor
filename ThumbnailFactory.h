@@ -41,6 +41,8 @@ public:
 	virtual ~ThumbnailFactory();
 	
 	std::auto_ptr<QGraphicsItem> get(PageInfo const& page_info);
+
+	void setMaxLogicThumbSize(QSizeF const &max_size);
 private:
 	class Collector;
 	
