@@ -145,6 +145,8 @@ public:
 	void invalidateThumbnail(PageInfo const& page_info);
 	
 	void invalidateAllThumbnails();
+
+    void setThumbnailLogicalSize(QSizeF const& max_size);
 	
 	bool setSelection(PageId const& page_id);
 
@@ -477,6 +479,11 @@ ThumbnailSequence::emitNewSelectionLeader(
 	emit newSelectionLeader(page_info, thumb_rect, flags);
 }
 
+void ThumbnailSequence::setThumbnailLogicalSize(QSizeF const &max_size) {
+    m_ptrImpl->setThumbnailLogicalSize(max_size);
+    m_ptrImpl->invalidateAllThumbnails();
+}
+
 
 /*======================== ThumbnailSequence::Impl ==========================*/
 
@@ -711,6 +718,10 @@ ThumbnailSequence::Impl::invalidateThumbnailImpl(ItemsById::iterator const id_it
 void
 ThumbnailSequence::Impl::invalidateAllThumbnails()
 {
+    if (m_ptrFactory.get()) {
+        m_ptrFactory->setMaxLogicThumbSize(m_maxLogicalThumbSize);
+    }
+
 	// Recreate thumbnails now, whether a thumbnail is incomplete
 	// is taken into account when sorting.
 	ItemsInOrder::iterator ord_it(m_itemsInOrder.begin());
@@ -1427,6 +1438,10 @@ ThumbnailSequence::Impl::commitSceneRect()
 	} else {
 		m_graphicsScene.setSceneRect(m_sceneRect);
 	}
+}
+
+void ThumbnailSequence::Impl::setThumbnailLogicalSize(QSizeF const& max_size) {
+    m_maxLogicalThumbSize = max_size;
 }
 
 

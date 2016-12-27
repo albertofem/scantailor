@@ -424,7 +424,7 @@ MainWindow::switchToNewProject(
 	if (out_dir.isEmpty()) {
 		m_ptrThumbnailCache.reset();
 	} else {
-		m_ptrThumbnailCache = Utils::createThumbnailCache(m_outFileNameGen.outDir());
+		m_ptrThumbnailCache = Utils::createThumbnailCache(m_outFileNameGen.outDir(), m_maxLogicalThumbSize);
 	}
 	resetThumbSequence(currentPageOrderProvider());
 
@@ -527,6 +527,17 @@ MainWindow::setupThumbView()
 	
 	thumbView->setBackgroundBrush(palette().color(QPalette::Window));
 	m_ptrThumbSequence->attachView(thumbView);
+
+    thumbView->setThumbSequence(m_ptrThumbSequence.get());
+}
+
+bool
+MainWindow::eventFilter(QObject *watched, QEvent *e) {
+	if (e->type() == QEvent::MouseButtonRelease) {
+		return true;
+	}
+
+	return QWidget::eventFilter(watched, e);
 }
 
 void
