@@ -36,4 +36,5 @@ public:
 	virtual QSizeF maxLogicalThumbSize() const = 0;
 };
 
+
 #endif

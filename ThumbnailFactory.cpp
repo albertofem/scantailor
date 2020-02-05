@@ -19,6 +19,7 @@
 #include "ThumbnailFactory.h"
 #include "CompositeCacheDrivenTask.h"
 #include "filter_dc/ThumbnailCollector.h"
+#include "Utils.h"
 #include <QGraphicsItem>
 #include <QSizeF>
 
@@ -32,6 +33,8 @@ public:
 	virtual IntrusivePtr<ThumbnailPixmapCache> thumbnailCache();
 	
 	virtual QSizeF maxLogicalThumbSize() const;
+
+	virtual void setMaxLogicThumbSize(QSizeF const &max_size);
 	
 	std::auto_ptr<QGraphicsItem> retrieveThumbnail() { return m_ptrThumbnail; }
 private:
@@ -62,6 +65,11 @@ ThumbnailFactory::get(PageInfo const& page_info)
 	return collector.retrieveThumbnail();
 }
 
+void ThumbnailFactory::setMaxLogicThumbSize(QSizeF const &max_size) {
+	m_maxSize = max_size;
+    m_ptrPixmapCache = Utils::createThumbnailCache(m_ptrPixmapCache->getThumbDir(), max_size);
+}
+
 
 /*======================= ThumbnailFactory::Collector ======================*/
 
@@ -89,4 +97,8 @@ QSizeF
 ThumbnailFactory::Collector::maxLogicalThumbSize() const
 {
 	return m_maxSize;
+}
+
+void ThumbnailFactory::Collector::setMaxLogicThumbSize(QSizeF const &max_size) {
+	m_maxSize = max_size;
 }

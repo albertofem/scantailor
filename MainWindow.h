@@ -302,6 +302,8 @@ private:
 	bool m_debug;
 	bool m_closing;
 	bool m_beepOnBatchProcessingCompletion;
+
+	bool eventFilter(QObject *watched, QEvent *e);
 };
 
 #endif
